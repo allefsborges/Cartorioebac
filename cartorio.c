@@ -1,50 +1,52 @@
 #include <stdio.h> //biblioteca de comunicação com o usuário
-#include <stdlib.h>
+#include <stdlib.h> //biblioteca de alocações de espaço e memória
 #include <locale.h> //biblioteca de alocações de texto por região
-#include <string.h>
+#include <string.h> //biblioteca responsável por cuidar da string
 
 
-int registrar()
+int registrar() //função responsável por cadastrar os usuários
 {
 	
-	printf("\tVocê escolheu a opção -Registrar nomes-\n\n");
+	printf("\tVocê escolheu a opção -Registrar nomes-\n\n"); //Apresentação da escolha feita pelo usuário
 	
+	// inicio da criação de variáveis / string
 	char arquivo[200];
 	char cpf [200];
 	char nome [200];
 	char sobrenome [200];
 	char cargo [200];
+	//final da criação de variáveis
 	
-	printf("Digite o CPF a ser cadastrado: ");
-	scanf("%s" , cpf);
+	printf("Digite o CPF a ser cadastrado: "); //Coletando a informação do usuário
+	scanf("%s" , cpf); //%s refere-se a string / armazenamento da informação
 	
-	strcpy(arquivo, cpf);
+	strcpy(arquivo, cpf); //responsável por criar valores da string
 	
-	FILE *file;
-	file = fopen(arquivo , "w");
-	fprintf(file, "CPF: ");
-	fclose(file);
+	FILE *file; //cria o arquivo 
+	file = fopen(arquivo , "w"); //cria o arquivo / o "w" significa writer
+	fprintf(file, "CPF: "); //salva o valor da variável 
+	fclose(file); // fecha o arquivo
 	
-	file = fopen(arquivo , "a");
-	fprintf(file, cpf);
-	fclose(file);
+	file = fopen(arquivo , "a"); //abre o arquivo / o "a" siginifica atualizar
+	fprintf(file, cpf); // armazena o arquivo
+	fclose(file); // fecha o arquivo
 	
-	file = fopen(arquivo , "a");
-	fprintf(file, "/ Aluno: ");
-	fclose(file);
+	file = fopen(arquivo , "a"); //atualiza o arquivo
+	fprintf(file, "/ Nome: "); //salva o valor do variável
+	fclose(file); //fecha o arquivo
 	
-	printf("Digite o nome a ser cadastrado: ");
-	scanf("%s", nome);
+	printf("Digite o nome a ser cadastrado: "); //Coletando a informação do usuário
+	scanf("%s", nome); //%s refere-se a string / armazenamento da informação
 	
-	file = fopen(arquivo , "a");
-	fprintf(file, nome);
-	fclose(file);
+	file = fopen(arquivo , "a"); //atualiza o arquivo
+	fprintf(file, nome); //salva o valor do variável
+	fclose(file); //fecha o arquivo
 	
 	file = fopen(arquivo, "a");
 	fprintf(file, " ");
 	fclose(file);
 	
-	printf("Digite o último sobrenome a ser cadastrado: ");
+	printf("Digite o último sobrenome a ser cadastrado: "); 
 	scanf("%s", sobrenome);
 	
 	file = fopen(arquivo,"a");
@@ -62,33 +64,35 @@ int registrar()
 	fprintf(file, cargo);
 	fclose(file);
 	
-	system("pause");
+	system("pause"); //pausa o sistema
 	
 }
 
 int consultar()
 {
-	printf("\tVocê escolheu a opção -Consultar nomes-\n\n");
+	printf("\tVocê escolheu a opção -Consultar nomes-\n\n"); //Apresentação da escolha feita pelo usuário
 	
+	// inicio da criação de variáveis / string
 	char cpf [40];
 	char conteudo [40];
+	//final da criação de variáveis
 	
-	printf("Digite o CPF a ser consultado: ");
+	printf("Digite o CPF a ser consultado: "); //Coletando informações
 	scanf("%s", cpf);
 	
-	FILE *file;
-	file = fopen(cpf, "r");
+	FILE *file; //cria o arquivo
+	file = fopen(cpf, "r"); //abre o arquivo / "r" significa read
 	
-	if(file == NULL)
+	if(file == NULL) //apresentará determinado condição quando o resultado for nulo
 	{
 		printf("CPF inválido. Tente novamente. ");
 		printf("\n\n");
 		system("pause");
 	}
 	
-	while(fgets(conteudo, 100, file) != NULL)
+	while(fgets(conteudo, 100, file) != NULL) //apresentará determinado valor quando o resultado for diferente de nulo
 	{
-		printf("Essas são as informações do usuário: ");
+		printf("Essas são as informações do usuário: "); //mostra as informações do CPF digitado
 		printf("%s", conteudo);
 		printf("\n\n");
 		
@@ -98,63 +102,66 @@ int consultar()
 
 int deletar()
 {
-	printf("\tVocê escolheu a opção -Deletar nomes-!\n\n");
+	printf("\tVocê escolheu a opção -Deletar nomes-!\n\n"); //Apresentação da escolha feita pelo usuário
 	
+	//inicio criação da variavel
 	char cpf[40];
+	//final da criação da variável
 	
 	printf("Digite o CPF do usuário a ser deletado: ");
 	scanf("%s", cpf);
 	printf("\n");
 	
-	FILE *file = fopen(cpf, "r");
-    if (file == NULL)
+	FILE *file = fopen(cpf, "r"); //abre o arquivo e lê
+    if (file == NULL) //se p resultado for nulo...
 	{
-		printf("\tO usuário não pode ser identificado no sistema!\n\n");
+		printf("\tO usuário não pode ser identificado no sistema!\n\n"); //... apresenta isso
 		system("pause");
-		system("cls");
-		return;
+		system("cls"); //apaga o que tinha na tela
+		return; 
 	}
-	fclose(file); 
+	fclose(file); //fecha o arquivo
 	
-	int opcao=0;
+	int opcao=0; //Definido variáveis 
 	
 	printf("Tem certeza que deseja deletar?\n\n");
 	printf("\t1 - Sim\n");
 	printf("\t2 - Não\n\n");
 	printf("Escolha uma opção: ");
-	scanf("%d", &opcao);
+	scanf("%d", &opcao); //Armazenar a escolha do usuário
 	printf("\n");	
 
-			if(opcao==1)
+			switch(opcao) 
 			{
+				case 1:
 				remove(cpf);
 				printf("Usuário Removido\n\n");
 				system("pause");
 				system("cls");
-			}	
-		
-			if(opcao==2)
-			{
+				break;
+				
+				case 2:
 				printf("Tente novamente!\n\n");
 				system("pause");
 				system("cls");
-				deletar();
+				deletar(); //retorna para int(deletar)
+				break;
 			}
-	main();
+	main(); //retorna para o menu
 }
 
 
-int main ()
+int main () //menu
 {	
 	int opcao=0; //Definido variáveis 
 	int loop=1;
 	
-	for(loop=1;loop=1;)
+	for(loop=1;loop=1;) // retorna para o menu quando tiver finalizado
 	{
 	
-		system("cls");
+		system("cls"); //limpa a tela
 		
-		setlocale(LC_ALL, "Portuguese");
+		setlocale(LC_ALL, "Portuguese"); //idioma selecionado
 	
 		printf("\tCARTÓRIO DA EBAC\n\n");
 		printf("\tSeja bem-vindo! \nPor favor selecione uma das opções a seguir \n\n");
@@ -168,7 +175,7 @@ int main ()
 		
 		system("cls"); //Limpar a tela a partir da escolha do usuário
 		
-		switch(opcao)
+		switch(opcao) //inicio da seleção de menu
 		{
 			case 1:
 			registrar();
@@ -184,7 +191,7 @@ int main ()
 			
 			case 4:
 			printf("Obrigado por utilizar o sistema");
-			return 0;
+			return 0; //retorna o valor 0 e fecha o sistema 
 			break;
 			
 			default:
